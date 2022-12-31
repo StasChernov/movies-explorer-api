@@ -1,6 +1,5 @@
 # Дипломный проект
 
-
 ## Директории
 
 `/routes` — папка с файлами роутера  
@@ -13,3 +12,6 @@
 
 `npm run start` — запускает сервер   
 `npm run dev` — запускает сервер с hot-reload
+
+## Доступ по адресу:
+https://api.movies.chernov.nomoredomains.club/
