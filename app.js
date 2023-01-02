@@ -10,7 +10,7 @@ const NotFoundError = require('./errors/not-found-err');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 require('dotenv').config();
 
-const { PORT = 3000 } = process.env;
+const {NODE_ENV, URL_DB, PORT = 3000 } = process.env;
 const app = express();
 
 app.use(cors(
@@ -20,9 +20,7 @@ app.use(cors(
   },
 ));
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
-  useNewUrlParser: true,
-});
+mongoose.connect(NODE_ENV === 'production' ? URL_DB : 'mongodb://localhost:27017/bitfilmsdb');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
