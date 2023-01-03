@@ -10,7 +10,7 @@ const NotFoundError = require('./errors/not-found-err');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 require('dotenv').config();
 
-const {NODE_ENV, URL_DB, PORT = 3000 } = process.env;
+const { NODE_ENV, URL_DB, PORT = 3000 } = process.env;
 const app = express();
 
 app.use(cors(
