@@ -11,15 +11,16 @@ module.exports.getMovies = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  Movie.findByIdAndRemove(req.params._id)
+  Movie.findById(req.params._id)
     .then((movie) => {
       if (!movie) {
-        next(new NotFoundError('Фильм не найдена'));
+        throw new NotFoundError('Фильм с указанным _id не найден');
       } else if (movie.owner.toString() !== req.user._id) {
-        next(new ForbiddenError('Запрещено'));
+        throw new ForbiddenError('Запрещено');
       } else {
-        movie.remove();
-        res.send(movie);
+        return movie.remove()
+          .then(res.send(movie))
+          .catch(next);
       }
     })
     .catch((err) => {
