@@ -28,13 +28,10 @@ module.exports.createUser = (req, res, next) => {
       res.status(constants.HTTP_STATUS_CREATED).send(user);
     })
     .catch((err) => {
-      if (err.code === 11000) {
-        next(new ConflictError('Пользователь с таким email уже существует'));
-      } else if (err.name === 'ValidationError') {
-        next(new BadRequestError('Некорректные данные для пользователя'));
-      } else {
-        next(err);
-      }
+      if (err.code === 11000) next(new ConflictError('Пользователь с таким email уже существует'));
+      else
+      if (err.name === 'ValidationError') next(new BadRequestError('Некорректные данные для пользователя'));
+      else next(err);
     });
 };
 
@@ -74,6 +71,8 @@ module.exports.updateUser = (req, res, next) => {
       }
     })
     .catch((err) => {
+      if (err.code === 11000) next(new ConflictError('Пользователь с таким email уже существует'));
+      else
       if (err.name === 'CastError') next(new BadRequestError('Некорректный запрос пользователя.'));
       else
       if (err.name === 'ValidationError') next(new BadRequestError('Некорректные данные для пользователя'));
